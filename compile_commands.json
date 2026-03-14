@@ -1,8 +1,0 @@
-[
-{
-  "directory": "/Users/andrew/EBRT",
-  "command": "/usr/bin/cc  -isystem /opt/homebrew/include  -arch arm64 -o CMakeFiles/EBRT.dir/main.c.o -c /Users/andrew/EBRT/main.c",
-  "file": "/Users/andrew/EBRT/main.c",
-  "output": "CMakeFiles/EBRT.dir/main.c.o"
-}
-]

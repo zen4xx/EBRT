@@ -2,17 +2,26 @@
 
 int main(void)
 {
-    InitWindow(800, 450, "raylib [core] example - basic window");
+    // Init
+    const int screenWidth = 600;
+    const int screenHeight = 400;
+    InitWindow(screenWidth, screenHeight, "EchoBreak Rasterization Tool");
+    SetTargetFPS(60);
 
+    // Main
     while (!WindowShouldClose())
     {
+        // Update
+        
+
+        // Draw
         BeginDrawing();
-        ClearBackground(RAYWHITE);
-        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+        ClearBackground(BLACK);
+        DrawTriangleLines((Vector2){screenWidth / 4.0f * 3.0f, 160.0f},
+                          (Vector2){screenWidth / 4.0f * 3.0f - 20.0f, 230.0f},
+                          (Vector2){screenWidth / 4.0f * 3.0f + 20.0f, 230.0f}, PURPLE);
         EndDrawing();
     }
-
     CloseWindow();
-
     return 0;
 }

@@ -1,0 +1,9 @@
+/_deps
+/.vscode
+/CMakeFiles
+CMakeCache.txt
+CPackSourceConfig.cmake
+cmake_install.cmake
+CPackConfig.cmake
+Makefile
+EBRT

@@ -19,7 +19,8 @@ if (NOT raylib_FOUND)
 endif()
 
 
-file(GLOB SRC_FILES src/*.c)
+file(GLOB SRC_FILES src/*.c src/math/*.c)
+
 add_executable(${PROJECT_NAME} ${SRC_FILES})
 #set(raylib_VERBOSE 1)
 target_link_libraries(${PROJECT_NAME} raylib)

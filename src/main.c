@@ -1,10 +1,12 @@
+#include "math/math.h" // raylib is also here
 #include "raylib.h"
+#include <math.h>
 
 int main(void)
 {
     // Init
-    const int screenWidth = 600;
-    const int screenHeight = 400;
+    const int screenWidth = 800;
+    const int screenHeight = 600;
     InitWindow(screenWidth, screenHeight, "EchoBreak Rasterization Tool");
     SetTargetFPS(60);
 
@@ -12,14 +14,15 @@ int main(void)
     while (!WindowShouldClose())
     {
         // Update
-        
+        Vector3 cam = {0.f, 0.f, sin(GetTime()) * 10};
+        Vector2 p1 = projectPoint((Vector3){0.f, 100.f, 3.f}, cam, screenWidth, screenHeight, 1.42);
+        Vector2 p2 = projectPoint((Vector3){-100.f, 0.f, 3.f}, cam, screenWidth, screenHeight, 1.42);
+        Vector2 p3 = projectPoint((Vector3){100.f, 0.f, 3.f}, cam, screenWidth, screenHeight, 1.42);
 
         // Draw
         BeginDrawing();
         ClearBackground(BLACK);
-        DrawTriangleLines((Vector2){screenWidth / 4.0f * 3.0f, 160.0f},
-                          (Vector2){screenWidth / 4.0f * 3.0f - 20.0f, 230.0f},
-                          (Vector2){screenWidth / 4.0f * 3.0f + 20.0f, 230.0f}, PURPLE);
+        DrawTriangleLines(p3, p2, p1, PURPLE);
         EndDrawing();
     }
     CloseWindow();

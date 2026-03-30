@@ -26,6 +26,8 @@ int main(void)
 
         if (IsKeyDown(KEY_RIGHT)) yaw -= rotation_speed;
         if (IsKeyDown(KEY_LEFT)) yaw += rotation_speed;
+        if (IsKeyDown(KEY_DOWN)) pitch -= rotation_speed;
+        if (IsKeyDown(KEY_UP)) pitch += rotation_speed;
         if (IsKeyDown(KEY_W)) cam.z += cam_speed;
         if (IsKeyDown(KEY_A)) cam.x += cam_speed;
         if (IsKeyDown(KEY_S)) cam.z -= cam_speed;

@@ -2,7 +2,9 @@
 #include "raylib.h"
 #include <math.h>
 
-Vector3 normalize(Vector3 v)
+#define world_up (Vector3){0, 1, 0}
+
+static inline Vector3 normalize(Vector3 v)
 {
     float w = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
 
@@ -15,7 +17,8 @@ Vector3 normalize(Vector3 v)
     return res;
 }
 
-Vector3 cross(Vector3 a, Vector3 b) {
+static inline Vector3 cross(Vector3 a, Vector3 b) 
+{
     return (Vector3){
         a.y * b.z - a.z * b.y,  
         a.z * b.x - a.x * b.z,  
@@ -23,15 +26,13 @@ Vector3 cross(Vector3 a, Vector3 b) {
     };
 }
 
-float dot(Vector3 a, Vector3 b) {
+static inline float dot(Vector3 a, Vector3 b) 
+{
     return (a.x * b.x + a.y * b.y + a.z * b.z);
 }
 
 Vector2 projectPoint(Vector3 p, Vector3 cam, float yaw, float pitch, int w, int h, float f)
 {
-
-    Vector3 world_up = {0, 1, 0};
-
     // world -> camera
     Vector3 pc = {
         p.x - cam.x,

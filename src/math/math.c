@@ -4,63 +4,32 @@
 
 #define world_up (Vector3){0, 1, 0}
 
-static inline Vector3 normalize(Vector3 v)
-{
-    float w = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-
-    Vector3 res = {
-        v.x / w,
-        v.y / w,
-        v.z / w
-    };
-
-    return res;
-}
-
-static inline Vector3 cross(Vector3 a, Vector3 b) 
-{
-    return (Vector3){
-        a.y * b.z - a.z * b.y,  
-        a.z * b.x - a.x * b.z,  
-        a.x * b.y - a.y * b.x   
-    };
-}
-
-static inline float dot(Vector3 a, Vector3 b) 
-{
-    return (a.x * b.x + a.y * b.y + a.z * b.z);
-}
-
 Vector2 projectPoint(Vector3 p, Vector3 cam, float yaw, float pitch, int w, int h, float f)
 {
-    // world -> camera
-    Vector3 pc = {
-        p.x - cam.x,
-        p.y - cam.y,
-        p.z - cam.z};
+    Vector3 pc = { p.x - cam.x, p.y - cam.y, p.z - cam.z };
 
     Vector3 forward = {
-        cos(pitch) * sin(yaw),
-        sin(pitch),
-        cos(pitch) * cos(yaw)
+        cosf(pitch) * sinf(yaw),
+        sinf(pitch),
+        cosf(pitch) * cosf(yaw)
     };
 
-    Vector3 right = normalize(cross(forward, world_up));
-    Vector3 up = cross(right, forward);
+    Vector3 right = normalize(cross(world_up, forward));
+    if (right.x == 0 && right.y == 0 && right.z == 0) {
+        right = (Vector3){1, 0, 0}; 
+    }
+    
+    Vector3 up = cross(forward, right);
 
-    pc.x = dot(pc, right);
-    pc.y = dot(pc, up);
-    pc.z = dot(pc, forward);
-        
-        // perspective
-    Vector2 proj = {
-        pc.x / pc.z,
-        pc.y / pc.z};
-            
-            // screen
-    Vector2 screen = {
-            proj.x * f + w / 2.f,
-            -proj.y * f + h / 2.f};
-                
-    return screen;
+    pc = (Vector3){ dot(pc, right), dot(pc, up), dot(pc, forward) };
+
+    if (pc.z <= 0.1f) return (Vector2){DO_NOT_DRAW, DO_NOT_DRAW};
+
+    float projX = pc.x / pc.z;
+    float projY = pc.y / pc.z;
+
+    return (Vector2){
+        projX * f + w / 2.f,
+        -projY * f + h / 2.f
+    };
 }

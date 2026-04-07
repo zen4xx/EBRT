@@ -1,4 +1,6 @@
 #include "math/math.h" // raylib is also here
+#include "raylib.h"
+#include <stdint.h>
 
 static const Vector3 cubeVertices[8] = {
     {-1, -1, -1},  // 0: back-bottom-left
@@ -11,11 +13,15 @@ static const Vector3 cubeVertices[8] = {
     {-1,  1,  1}   // 7: front-top-left
 };
 
-static const int cubeEdges[12][2] = {
-    {0, 1}, {1, 2}, {2, 3}, {3, 0},  
-    {4, 5}, {5, 6}, {6, 7}, {7, 4},  
-    {0, 4}, {1, 5}, {2, 6}, {3, 7}   
+static const uint16_t cubeIndices[36] = {
+    0,3,2, 0,2,1,  
+    4,5,6, 4,6,7,  
+    0,4,7, 0,7,3,  
+    1,2,6, 1,6,5,  
+    3,2,6, 3,6,7,  
+    0,1,5, 0,5,4   
 };
+
 
 void drawCube(Vector3 position, Vector3 camera, float yaw, float pitch, int width, int height, float focalLength)
 {
@@ -34,18 +40,16 @@ void drawCube(Vector3 position, Vector3 camera, float yaw, float pitch, int widt
     
     for (int i = 0; i < 12; i++)
     {
+        int a = cubeIndices[i * 3 + 0];
+        int b = cubeIndices[i * 3 + 1];
+        int c = cubeIndices[i * 3 + 2];
 
-        int a = cubeEdges[i][0];
-        int b = cubeEdges[i][1];
-        
         if (projected[a].x > -1000 && projected[a].x < width + 1000 &&
             projected[b].x > -1000 && projected[b].x < width + 1000)
         {
-            DrawLine(
-                (int)projected[a].x, (int)projected[a].y,
-                (int)projected[b].x, (int)projected[b].y,
-                WHITE
-            );
+            DrawLine((int)projected[a].x, (int)projected[a].y, (int)projected[b].x, (int)projected[b].y, RED);
+            DrawLine((int)projected[b].x, (int)projected[b].y, (int)projected[c].x, (int)projected[c].y, GREEN);
+            DrawLine((int)projected[c].x, (int)projected[c].y, (int)projected[a].x, (int)projected[a].y, BLUE);
         }
     }
 }

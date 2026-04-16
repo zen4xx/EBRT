@@ -1,6 +1,4 @@
 #include "math.h"
-#include "raylib.h"
-#include <math.h>
 
 #define world_up (Vector3){0, 1, 0}
 
